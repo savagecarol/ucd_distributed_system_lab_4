@@ -18,7 +18,7 @@ func RegisterRoutes() http.Handler {
 		AllowCredentials: true, 
 	}))
 
-	r.GET("/", HelloWorldHandler)
+	r.GET("/health", HelloWorldHandler)
 
 	apiRoutes := r.Group("/api")
 	apis.RegisterAuthRoutes(apiRoutes)

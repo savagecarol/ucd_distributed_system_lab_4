@@ -3,8 +3,26 @@ package apis
 import  "github.com/gin-gonic/gin"
 import "net/http"
 import "backend-service/model"
+import "math/rand"
+import "time"
 
 func first(c *gin.Context) {
+
+		rand.Seed(time.Now().UnixNano())
+
+		if rand.Float32() < 0.3 {
+			delay := time.Duration(rand.Intn(2000)+1000) * time.Millisecond // 1–3 sec
+			time.Sleep(delay)
+		}
+	
+		// Random error to simulate failure (20% chance)
+		if rand.Float32() < 0.2 {
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"error": "simulated backend failure",
+			})
+			return
+		}
+	
 
 	resp := make(map[string]string)
 	resp["message"] = "Hello World 1"
