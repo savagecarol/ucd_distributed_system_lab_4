@@ -1,22 +1,27 @@
 package apis
 
-import  "github.com/gin-gonic/gin"
-import "net/http"
-import "backend-service/model"
-import "math/rand"
-import "time"
+import (
+	"backend-service/model"
+	"log"
+	"math/rand"
+	"net/http"
+	"time"
+
+	"github.com/gin-gonic/gin"
+)
 
 func first(c *gin.Context) {
-
+	log.Print("Request Cominfg to /first endpoint")
 		rand.Seed(time.Now().UnixNano())
 
-		if rand.Float32() < 0.3 {
-			delay := time.Duration(rand.Intn(2000)+1000) * time.Millisecond // 1–3 sec
+		if rand.Float32() < 0.4 {
+			log.Print("Simulating delay...")
+			delay := time.Duration(rand.Intn(2000)+1000) * time.Millisecond
 			time.Sleep(delay)
 		}
 	
-		// Random error to simulate failure (20% chance)
-		if rand.Float32() < 0.2 {
+		if rand.Float32() < 0.3 {
+			log.Print("Simulating error...")
 			c.JSON(http.StatusInternalServerError, gin.H{
 				"error": "simulated backend failure",
 			})
